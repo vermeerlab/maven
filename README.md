@@ -16,7 +16,7 @@ edit pom
     <repositories>
         <!-- Maven Repository on GitHub  start -->
         <repository>
-            <id>maven-test-${git.branchName}</id>
+            <id>org.vermeerlab</id>
             <url>https://raw.github.com/${git.repositoryOwner}/${git.repositoryName}/${git.branchName}/</url>
             <snapshots>
                 <enabled>true</enabled>
