@@ -70,7 +70,7 @@ JarPathScanner<Path> scanner = new JarPathScanner<>();
 ---
 ### 応用（検索条件の拡張）
 ※実際に別パッケージにて行った拡張です.  
-[パッケージフォルダ](https://bitbucket.org/vermeerlab/apt-core/src/f3cc7e40c5add013f138d60c5ead204464ff4a0a/src/main/java/org/vermeerlab/apt/command/?at=0-3-0)  
+[パッケージフォルダ](https://bitbucket.org/vermeerlab/apt-core/src/a7d3730f99d806c3c2eb6fed0a9c5a31f32af7f9/src/main/java/org/vermeerlab/apt/command/?at=0-3-0)  
 
 #### ClassPath
 
