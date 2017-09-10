@@ -205,7 +205,7 @@ Jarファイル名の検索条件を変更する（`JarPathScanner#jarFilter`）
 検索、編集のメソッドを`protected`にしているので用途に応じた拡張をしてください.
 
 ## Code
-[BitBuckt](https://bitbucket.org/vermeerlab/classpath-scanner)
+[BitBucket](https://bitbucket.org/vermeerlab/classpath-scanner)
 
 
 ## Version
