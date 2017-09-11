@@ -3,7 +3,8 @@ Pluggable Annotation Processing API with JavaPoet
 
 ## Description
 
-`annotation-processor-core`[^footnote1]の実行コマンドで`JavaPoet`を用いてコード生成を行います.
+[annotation-processor-core](https://github.com/vermeerlab/maven/tree/mvn-repo/org/vermeerlab/annotation-processor-core)の実行コマンドで`JavaPoet`を用いてコード生成を行います.
+
 
 ## Usage
 
@@ -271,9 +272,6 @@ Boolean hasAnnotation = mixElement.getAnnotation(ElementOther.class).isPresent()
 |FIELD|`FieldElement`|`FieldElements`|
 |else|`CategorizedElement`|`CategorizedElements`|
 
-
-
-[^footnote1]:annotation-processor-core(https://github.com/vermeerlab/maven/tree/mvn-repo/org/vermeerlab/annotation-processor-core)
 
 ## Code
 [BitBucket](https://bitbucket.org/vermeerlab/apt-javapoet/overview)
