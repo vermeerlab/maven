@@ -10,6 +10,7 @@
         <module>../xml</module>
         <module>../classpath-scanner</module>
         <module>../apt-core</module>
+        <module>../apt-javapoet</module>
     </modules>
 
     <properties>
