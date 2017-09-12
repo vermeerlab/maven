@@ -3,6 +3,11 @@ Extention Resource Bundle
 
 拡張`Resource Bundle`です.
 
+このパッケージを使用することで便利になることは以下です.
+
+* 共通的なコメントを生成コードに統一的に付与できる
+* `toString`で確認できるので、生成コードをProcessorで実行しなくても確認ができる
+
 ## Usage
 
 ### pom.xml
