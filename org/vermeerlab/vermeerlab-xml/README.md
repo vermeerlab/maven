@@ -47,15 +47,18 @@ XMLを操作するクラス群です
 
 
 ## Version
-* 0.2.0  
+
+* 0.2.1
+CDATAでは空白除去しないように修正
+
+* 0.2.0
 ファイルパスからxmlを読み込む機能の追加
 
-* 0.1.0  
+* 0.1.0
 初期リリース（リポジトリなし）
 
 ## Licence
-Licensed under the [Apache License, Version 2.0][Apache]  
-[Apache]:http://www.apache.org/licenses/LICENSE-2.0
+Licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 ## Author
 [_vermeer_](https://twitter.com/_vermeer_)
