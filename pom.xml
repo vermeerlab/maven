@@ -11,6 +11,7 @@
         <module>../classpath-scanner</module>
         <module>../apt-core</module>
         <module>../apt-javapoet</module>
+        <module>../resource-bundle</module>
     </modules>
 
     <properties>
