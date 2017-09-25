@@ -12,6 +12,8 @@
         <module>../apt-core</module>
         <module>../apt-javapoet</module>
         <module>../resource-bundle</module>
+        <module>../apt-resource-enum</module>
+        <module>../resource-enum-user</module>
     </modules>
 
     <properties>
