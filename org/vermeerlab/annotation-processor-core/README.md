@@ -7,7 +7,11 @@ Pluggable Annotation Processing API Core
 
 ラウンド毎、および ラウンド毎の処理結果をまとめて最後に実行する ２種類のコマンドの作成ができます.
 
-`Annotation Processor`を実行するコマンドはコンパイル都度、クラスパスから検索します（Jarファイルにアーカイブされているクラスも対象にします）.
+プロダクトで実行するコマンドについては`processor-command.xml`に追記したコマンドを実行します.
+
+
+テストで使用する`Annotation Processor`を実行するコマンドはコンパイル都度、クラスパスから検索します（Jarファイルにアーカイブされているクラスも対象にします）.
+`processor-command.xml`に登録する必要はありません.
 
 
 ## Usage
@@ -16,9 +20,11 @@ Pluggable Annotation Processing API Core
 
 1. `Annotation Processor`が実行できる`pom.xml`の設定
 2. Command Class を実装
-3. コンパイル時に`Annotation Processor`により実行される（※）
+3. `processor-command.xml`に実行コマンドを登録します（※１）
+4. コンパイル時に`Annotation Processor`により実行します（※２）
 
-※ プロジェクトのクラスパスリソース直下の`processor-command.xml`により、実行時の制御ができます（任意）.
+※１ テスト用に作成したコマンドは実行時にクラスパスから参照するので登録不要です.  
+※２ プロジェクトのクラスパスリソース直下の`processor-command.xml`により、実行時の制御をします.
 
 ---
 
@@ -56,7 +62,7 @@ Pluggable Annotation Processing API Core
     <dependency>
         <groupId>org.vermeerlab</groupId>
         <artifactId>annotation-processor-core</artifactId>
-        <version>0.3.0</version> <!-- target version -->
+        <version>0.4.0</version> <!-- target version -->
     </dependency>
 </dependencies>
 
@@ -93,7 +99,7 @@ Pluggable Annotation Processing API Core
 * ラウンド毎の処理に加えて、最終ラウンドに処理（`PostProcessorCommandInterface`）
 
 ---
-### proseccor-command.xml の設定（任意）
+### proseccor-command.xml の設定
 
 #### ファイルが存在しない場合（デフォルト）
   

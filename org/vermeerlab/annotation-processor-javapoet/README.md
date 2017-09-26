@@ -3,14 +3,12 @@ Pluggable Annotation Processing API with JavaPoet
 
 ## Description
 
-[annotation-processor-core](https://github.com/vermeerlab/maven/tree/mvn-repo/org/vermeerlab/annotation-processor-core)の実行コマンドで`JavaPoet`を用いてコード生成を行います.
+[annotation-processor-core](https://github.com/vermeerlab/maven/tree/mvn-repo/org/vermeerlab/annotation-processor-core)の実行コマンドで`JavaPoet`を用いてコード生成を行うためのパッケージです.
 
 
 ## Usage
 
 ### pom.xml 記述
-
-利用ライブラリとして、また`Annotation Processor`を実行する設定をするために`pom.xml`を編集します.
 
 ```xml
 <properties>
@@ -69,52 +67,50 @@ Pluggable Annotation Processing API with JavaPoet
 </build>
 
 ```
+
+拡張パッケージでテストを行いたい場合は、以下も`pom.xml`に追記してください.
+
+```xml
+
+<!-- for annotation processor start-->
+<dependency>
+    <groupId>com.google.testing.compile</groupId>
+    <artifactId>compile-testing</artifactId>
+    <version>0.10</version>
+    <scope>test</scope>
+</dependency>
+
+<dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.12</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>org.hamcrest</groupId>
+    <artifactId>hamcrest-core</artifactId>
+    <version>1.3</version>
+    <scope>test</scope>
+</dependency>
+
+<!-- annotation processor end -->
+
+・・・  
+
+
+
+
+```
+
+
+### pom.xml 記述
+
 ---
 ### JavaPoetによるコードの生成
 
-`JavaPoet`のファイル出力に対するラッパークラスの`JavaPoetFile`を用いてファイル生成を行います.
-インスタンス生成時に指定する`JavaPoetConfigManager`はクラス生成時に共通して行う、ライセンスコメントやクラスコメントを編集するためのクラスです.
-
-
+`JavaPoet`のファイル出力に対するラッパークラスの`JavaPoetFile`を用いてファイル生成を行います.  
 ※JavaPoetそのものの使用方法については 本パッケージでは説明いたしません.
 
-クラス定義用クラスは`JavaPoetConfigInterface`を実装します.
-
-```java
-public class JavaPoetConfig implements JavaPoetConfigInterface {
-
-    @Override
-    public List<Class<?>> generatedClass() {
-        return Arrays.asList(GenerateCodeTestCommand.class);
-    }
-
-    @Override
-    public List<String> authors() {
-        return Arrays.asList("AUTHOR-NAME");
-    }
-
-    @Override
-    public List<String> versions() {
-        return Arrays.asList("1.1");
-    }
-
-    @Override
-    public List<String> sinces() {
-        return Arrays.asList("1.0");
-    }
-
-    @Override
-    public String ownerName() {
-        return "LICENSE-OWNER-NAME";
-    }
-
-    @Override
-    public String copyright() {
-        return "2017";
-    }
-}
-
-```
 
 `JavaPoetFile`によるコード編集（簡易）
 
