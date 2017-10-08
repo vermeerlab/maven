@@ -6,6 +6,12 @@
     <version>0.4.0</version>
     <packaging>jar</packaging>
 
+    <!--
+    <properties>
+        <processorcommand.classpath>/processor-command.xml</processorcommand.classpath>
+    </properties>
+    -->
+
     <parent>
         <groupId>org.vermeerlab</groupId>
         <artifactId>parentpom</artifactId>
@@ -36,7 +42,15 @@
 
     <build>
         <plugins>
-
+            <!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>-Dprocessorcommand.classpath=${processorcommand.classpath}</argLine>
+                </configuration>
+            </plugin>
+            -->
             <!-- for annotation processor start-->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
