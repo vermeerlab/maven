@@ -59,8 +59,7 @@ ClassLoader機能の追加
 初期リリース（リポジトリなし）
 
 ## Licence
-Licensed under the [Apache License, Version 2.0][Apache]  
-[Apache]:http://www.apache.org/licenses/LICENSE-2.0
+Licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 ## Author
 [_vermeer_](https://twitter.com/_vermeer_)
