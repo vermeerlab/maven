@@ -37,7 +37,7 @@ XMLを操作するクラス群です
     <dependency>
         <groupId>org.vermeerlab</groupId>
         <artifactId>vermeerlab-xml</artifactId>
-        <version>0.2.0</version> <!-- target version -->
+        <version>0.3.0</version>
     </dependency>
 </dependencies>
 ```
@@ -48,13 +48,20 @@ XMLを操作するクラス群です
 
 ## Version
 
+* 0.3.0
+
+テストケースの追記・バグ改修・JavaDoc見直し
+
 * 0.2.1
+
 CDATAでは空白除去しないように修正
 
 * 0.2.0
+
 ファイルパスからxmlを読み込む機能の追加
 
 * 0.1.0
+
 初期リリース（リポジトリなし）
 
 ## Licence
