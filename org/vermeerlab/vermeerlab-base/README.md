@@ -37,7 +37,7 @@
     <dependency>
         <groupId>org.vermeerlab</groupId>
         <artifactId>vermeerlab-base</artifactId>
-        <version>0.2.0</version> <!-- target version -->
+        <version>0.3.0</version>
     </dependency>
 </dependencies>
 ```
@@ -47,6 +47,10 @@
 
 
 ## Version
+* 0.3.0  
+ClassLoader関連は [FastClasspathScanner](https://github.com/lukehutch/fast-classpath-scanner)を使用するように改修
+
+
 * 0.2.0  
 型検証機能の追加  
 ClassLoader機能の追加
