@@ -96,6 +96,28 @@
 
             <plugins>
 
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.10.4</version>
+                    <configuration>
+                        <author>true</author>
+                        <source>${maven.compiler.source}</source>
+                        <show>protected</show>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                        <charset>${project.build.sourceEncoding}</charset>
+                        <docencoding>${project.build.sourceEncoding}</docencoding>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
                 <!-- Maven Repository on GitHub  start -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -212,7 +234,7 @@
                 <version>3.6.0</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.source}</target>
+                    <target>${maven.compiler.target}</target>
                     <compilerArgs>
                         <arg>-Xlint</arg>
                     </compilerArgs>
@@ -233,27 +255,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
-                <configuration>
-                    <author>true</author>
-                    <source>1.8</source>
-                    <show>protected</show>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <charset>${project.build.sourceEncoding}</charset>
-                    <docencoding>${project.build.sourceEncoding}</docencoding>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -318,7 +320,6 @@
             </plugin>
 
             <!-- github meven repository upload -->
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
