@@ -5,32 +5,11 @@ Pluggable Annotation Processing API Core
 
 `Pluggable Annotation Processing API`を実行する基底となるプロジェクトです.
 
-ラウンド毎、および ラウンド毎の処理結果をまとめて最後に実行する ２種類のコマンドの作成ができます.
-
-プロダクトで実行するコマンドについては`processor-command.xml`に追記したコマンドを実行します.
-
-
-テストで使用する`Annotation Processor`を実行するコマンドはコンパイル都度、クラスパスから検索します（Jarファイルにアーカイブされているクラスも対象にします）.
-`processor-command.xml`に登録する必要はありません.
-
+ラウンド毎、および ラウンド毎の処理結果をまとめて最後に実行する ２種類のコマンドを制御できます.
 
 ## Usage
 
-### 流れ
-
-1. `Annotation Processor`が実行できる`pom.xml`の設定
-2. Command Class を実装
-3. `processor-command.xml`に実行コマンドを登録します（※１）
-4. コンパイル時に`Annotation Processor`により実行します（※２）
-
-※１ テスト用に作成したコマンドは実行時にクラスパスから参照するので登録不要です.  
-※２ プロジェクトのクラスパスリソース直下の`processor-command.xml`により、実行時の制御をします.
-
----
-
 ### pom.xml 記述
-
-利用ライブラリとして、また`Annotation Processor`を実行する設定をするために`pom.xml`を編集します.
 
 ```xml
 <properties>
@@ -62,7 +41,7 @@ Pluggable Annotation Processing API Core
     <dependency>
         <groupId>org.vermeerlab</groupId>
         <artifactId>annotation-processor-core</artifactId>
-        <version>0.4.0</version> <!-- target version -->
+        <version>0.4.0</version>
     </dependency>
 </dependencies>
 
@@ -95,25 +74,77 @@ Pluggable Annotation Processing API Core
 `org.vermeerlab.apt.command.ProcessorCommandInterface`、または`org.vermeerlab.apt.command.PostProcessorCommandInterface`を実装したクラスをコンパイル時に検索して実行します.
 
 ２つのインターフェースの違い
+
 * ラウンド毎に処理（`ProcessorCommandInterface`）
 * ラウンド毎の処理に加えて、最終ラウンドに処理（`PostProcessorCommandInterface`）
 
 ---
-### proseccor-command.xml の設定
+### 定義用Xmlの設定
 
-#### ファイルが存在しない場合（デフォルト）
-  
-* コンソールに実行コマンドは表示しません  
-* 全ての`.class`ファイル および、`jar`ファイルを検索対象とします
+#### 定義用Xmlが存在しない場合（デフォルト）
 
-#### ファイルが存在する場合
+* `ProcessorCommandInterface` または `PostProcessorCommandInterface` 実装したクラスを処理対象とします
+* コンソールに実行コマンドは表示しません
 
-`processor-command.xml`の設定により、以下の対応が可能です.
+
+#### 定義用Xmlが存在しない場合
+
+##### 定義用Xmlファイルの指定
+
+pom.xml に `Annotation Processor`にて参照する 定義用Xmlのパスをシステムプロパティ（`processorcommand.classpath`）に設定します.
+
+```xml
+<properties>
+    <processorcommand.classpath>/processor-command.xml</processorcommand.classpath>
+</properties>
+
+<build>
+    <plugins>
+        <!-- for annotation processor start-->
+        <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.6.0</version>
+            <configuration>
+                <source>${maven.compiler.source}</source>
+                <target>${maven.compiler.target}</target>
+                <!-- Disable annotation processing for ourselves. -->
+                <compilerArgument>-proc:none</compilerArgument>
+                <compilerArgs>
+                    <arg>-Xlint</arg>
+                </compilerArgs>
+                <showDeprecation>true</showDeprecation>
+            </configuration>
+        </plugin>
+
+        <plugin>
+            <groupId>org.bsc.maven</groupId>
+            <artifactId>maven-processor-plugin</artifactId>
+            <version>2.2.4</version>
+            <executions>
+                <execution>
+                    <id>process</id>
+                    <goals>
+                        <goal>process</goal>
+                    </goals>
+                    <phase>generate-sources</phase>
+                    <configuration>
+                        <compilerArguments>-encoding ${project.build.sourceEncoding}</compilerArguments>
+                        <systemProperties>
+                            <processorcommand.classpath>${processorcommand.classpath}</processorcommand.classpath>
+                        </systemProperties>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        <!-- annotation processor end -->
+    </plugins>
+</build>
+```
+
+以下の対応が可能です.
 
 * 実際に実行しているコマンドクラスを確認をコンソールに出力
 * 適用したくないコマンドクラスの除外
-* クラスパス配下のファイルだけを対象にして、`jar`を対象外
-* 検索対象の`jar`ファイルを指定
 
 詳細は xmlコメントを参照してください.
 
@@ -125,7 +156,7 @@ Annotation Processor で実行するコマンドを登録する設定ファイ�
 org.vermeerlab.apt.command.ProcessorCommandInterface
 を実装してください.
 
-全ラウンドで まとめて行うコマンドは
+ラウンドで まとめて行うコマンドは
 org.vermeerlab.apt.command.PostProcessorCommandInterface
 を実装してください.
 -->
@@ -144,43 +175,43 @@ org.vermeerlab.apt.command.PostProcessorCommandInterface
         <excludeCommand>
         </excludeCommand>
     </excludeCommands>
-
-    <!--
-    コマンドクラスの検索対象としてクラスパス配下のJarファイルを読み込み有無を設定してください.
-    Jarファイルを読み込む場合は true
-    -->
-    <scanJarFile>true</scanJarFile>
-
-    <!--
-    コマンドクラスの検索対象とするクラスパス配下のJarファイルを設定してください.
-    -->
-    <scanTargetJarFiles>
-        <scanTargetJarFile>
-        </scanTargetJarFile>
-    </scanTargetJarFiles>
-
 </root>
+```
 
+## 独自拡張について
+
+本パッケージは 実行コマンドの実行制御と コマンド実行時のパラメータを外部ファイルにて指定できる基底プロジェクトです.
+
+要件にあわせて拡張することを前提としています.
+
+ [JavaPoet](https://github.com/square/javapoet)を使用して、Javaコードを生成する拡張をしたプロジェクトです.
+
+```
+https://bitbucket.org/vermeerlab/apt-javapoet
 ```
 
 
 
 
-## Code
-[BitBucket](https://bitbucket.org/vermeerlab/apt-core/overview)
 
+
+
+## Code
+[BitBucket](https://bitbucket.org/vermeerlab/apt-core)
 
 ## Version
+* 0.4.0
+実装クラスの検索機能の実装（xmlファイルでの指定をしなくても実行コマンドとなる）
 
-* 0.3.0  
+* 0.3.0
 実行コマンドクラスをprocessor-command.xmlから読み込むのではなくクラスパス配下（jar含む）から検索する。
 processor-command.xmlにより資産読み込みの指定をできるようにする。
 
-* 0.2.0（リポジトリなし）  
+* 0.2.0（リポジトリなし）
 機能分割（base,xmlパッケージを別プロジェクトに分割）
 bug fixed
 
-* 0.1.0  
+* 0.1.0
 初回リリース（リポジトリなし）
 ブログ掲載 http://vermeer.hatenablog.jp/entry/2017/08/18/230711
 
