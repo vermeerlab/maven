@@ -7,7 +7,15 @@ Pluggable Annotation Processing API with JavaPoet
 `org.vermeerlab.apt.javapoet.AbstractJavaPoetProcessorCommand`を継承したクラスが[annotation-processor-core](https://github.com/vermeerlab/maven/tree/mvn-repo/org/vermeerlab/annotation-processor-core)の処理対象のコマンドとなり、コンパイル都度 AnnotationProcessorで実行されます.
 
 
-本プロジェクトは あくまで基底となる機能を提供するだけで 実際の実行コマンドではありません。
+本プロジェクトを使用することでのメリット
+
+* AnnotationProcessorを統一的に操作できます
+* 定義用XMLで外部からパラメータを指定できます
+* 各Elementの操作のヘルパーが準備されています
+* テストが統一的に行えます
+
+※ 本プロジェクトは あくまで基底となる機能を提供するだけで 実際の実行コマンドではありません。
+
 
 ## Usage
 
