@@ -6,12 +6,6 @@
     <version>0.4.0</version>
     <packaging>jar</packaging>
 
-    <!--
-    <properties>
-        <processorcommand.classpath>/processor-command.xml</processorcommand.classpath>
-    </properties>
-    -->
-
     <parent>
         <groupId>org.vermeerlab</groupId>
         <artifactId>parentpom</artifactId>
@@ -20,14 +14,6 @@
     </parent>
 
     <dependencies>
-        <!-- for annotation processor start-->
-        <dependency>
-            <groupId>com.google.testing.compile</groupId>
-            <artifactId>compile-testing</artifactId>
-            <version>0.10</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- annotation processor end -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>vermeerlab-xml</artifactId>
@@ -36,46 +22,30 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>vermeerlab-classpath-scanner</artifactId>
-            <version>0.2.1</version>
+            <version>0.3.0</version>
         </dependency>
+
+        <!-- for annotation processor start-->
+        <dependency>
+            <groupId>com.google.testing.compile</groupId>
+            <artifactId>compile-testing</artifactId>
+        </dependency>
+        <!-- annotation processor end -->
+
     </dependencies>
 
     <build>
         <plugins>
-            <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <argLine>-Dprocessorcommand.classpath=${processorcommand.classpath}</argLine>
-                </configuration>
-            </plugin>
-            -->
             <!-- for annotation processor start-->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.0</version>
                 <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
                     <!-- Disable annotation processing for ourselves. -->
                     <compilerArgument>-proc:none</compilerArgument>
-                    <compilerArgs>
-                        <arg>-Xlint</arg>
-                    </compilerArgs>
                     <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
             <!-- annotation processor end -->
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.github.github</groupId>
-                <artifactId>site-maven-plugin</artifactId>
-            </plugin>
         </plugins>
     </build>
 
