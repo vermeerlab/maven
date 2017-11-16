@@ -72,8 +72,8 @@ public void 文字列からクラスをコンパイル() throws NoSuchMethodExce
 
 ## Version
 
-* 0.1.0  
-初回リリース（リポジトリなし）
+* 0.1.0
+初回リリース
 
 
 ## Licence
