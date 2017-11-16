@@ -3,10 +3,11 @@ Generate EnumClass from Properties ProcessorCommand
 
 ## Description
 
-`Pluggable Annotation Processing API`を使用して、ファイルからEnumクラスを生成します.
+`Pluggable Annotation Processing API`を使用して、プロパティファイルからEnumクラスを生成します.
 
 本プロジェクトを使用することで以下のことが実現できます.
 
+* コンパイル都度、自動生成するので常にPropertiesファイルとEnumの整合性が取れた状態が保てます
 * Propertiesファイルへの参照を統一的に行えます
 * Propertiesファイルを参照する実装がタイプセーフになります
 * 実装中にPropertiesの値を確認できます（IDEによるJavaDoc参照を経由）
