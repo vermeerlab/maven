@@ -20,11 +20,10 @@
             <version>1.9.0</version>
             <scope>compile</scope>
         </dependency>
+        
         <dependency>
             <groupId>com.google.testing.compile</groupId>
             <artifactId>compile-testing</artifactId>
-            <version>0.10</version>
-            <scope>test</scope>
         </dependency>
         <!-- annotation processor end -->
 
@@ -34,6 +33,11 @@
             <version>0.4.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>vermeerlab-dynamic-compiler</artifactId>
+            <version>0.1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -42,28 +46,14 @@
             <!-- for annotation processor start-->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.0</version>
                 <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
                     <!-- Disable annotation processing for ourselves. -->
                     <compilerArgument>-proc:none</compilerArgument>
-                    <compilerArgs>
-                        <arg>-Xlint</arg>
-                    </compilerArgs>
                     <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
             <!-- annotation processor end -->
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.github.github</groupId>
-                <artifactId>site-maven-plugin</artifactId>
-            </plugin>
         </plugins>
     </build>
 </project>
