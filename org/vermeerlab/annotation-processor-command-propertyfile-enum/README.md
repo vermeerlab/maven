@@ -97,8 +97,7 @@ MSG001("msg001", 0, "message001")
 
 ---
 
-## Usage
-
+## 使用方法
 
 ### 設定例（最小構成）
 
@@ -446,7 +445,7 @@ false: `message1`
 全てのアノテーションを設定した記載例です.
 
 ```java
-@TargetPropertyFile(classHeaderComment = "commentHeader", className = "Config", classNamePrefix = "Prefix", classNameSuffix = "Suffix")
+@TargetPropertyFile(classCommentTitle = "commentHeader", className = "Config", classNamePrefix = "Prefix", classNameSuffix = "Suffix")
 @PropertyValueWithKey(true)
 @PropertyKeyPrefix("【")
 @PropertyKeySuffix("】")
@@ -497,7 +496,7 @@ https://bitbucket.org/vermeer_etc/resource-enum-user-allset.git
 ベース名（Locale記述の無い）ファイルパス（フォルダに格納していたらフォルダ名も含める）を指定してください. 拡張子（`.properties`）は不要です.
 
 
-###### classHeaderComment
+###### classCommentTitle
 
 `xml`で指定した `classJavaDoc` の先頭に記載するコメントを指定できます.
 
@@ -613,7 +612,7 @@ System.out.println(Message.MSG001.format(locale));
 
 ---
 
-### クラス生成をしたプロジェクトを使用
+#### クラス生成をしたプロジェクトを使用
 
 `Annotation Processor` で作成したクラスは通常のクラスと同様に`jar`に格納されています.
 
@@ -679,23 +678,23 @@ public void messageToString() {
 
 ---
 
-### 実装例
+## 実装例
 
 想定される いくつかのユースケースのサンプルです.
 
-#### 出力メッセージにIDを付与
+### 出力メッセージにIDを付与
 
 ID（`Property Key`）をメッセージに付与します.
 
 `xml`で共通設定をして、クラスで資産ごとに異なる設定をしています.
 
-##### Code
+#### Code
 
 ```
 https://bitbucket.org/vermeer_etc/resource-enum-user-messagekey.git
 ```
 
-##### 定義用Xmlファイルの説明
+#### 定義用Xmlファイルの説明
 
 共通の設定は `xml` で行います
 
@@ -709,7 +708,7 @@ https://bitbucket.org/vermeer_etc/resource-enum-user-messagekey.git
 </propertyFileEnum>
 ```
 
-##### 定義用Javaクラスの説明
+#### 定義用Javaクラスの説明
 
 `properties.message` は共通設定を そのまま適用し、`properties.message2` は接頭・接尾文字を変更しています.
 
@@ -723,7 +722,7 @@ final String resourceName = "properties.message";
 final String resourceName2 = "properties.message2";
 ```
 
-##### 生成クラスの動作確認
+#### 生成クラスの動作確認
 
 挙動の違いをテストにて示します.
 
@@ -737,19 +736,19 @@ Assert.assertThat(Message2.MSG001.format(Locale.ENGLISH), is("【msg001】ルー
 ```
 
 
-#### ライセンス記述とクラスコメントの設定
+### ライセンス記述とクラスコメントの設定
 
 `xml`で生成する全てのコードに共通する記載を行い、実行コマンド毎に変更したいクラスコメントを編集します.
 
 加えて リソース毎のクラスヘッダーも追記します.
 
-##### Code
+#### Code
 
 ```
 https://bitbucket.org/vermeer_etc/resource-enum-user-classjavadoc.git
 ```
 
-##### 定義用Xmlファイルの説明
+#### 定義用Xmlファイルの説明
 
 全ての自動生成に関する定義は `value`指定なし を使用
 
@@ -806,7 +805,7 @@ Base resource name is $S.
 
 ```
 
-##### 定義用Javaクラスの説明
+#### 定義用Javaクラスの説明
 
 クラスコメントのヘッダーを編集できます.
 
@@ -818,10 +817,10 @@ Base resource name is $S.
 
 ```java
 
-@TargetPropertyFile(classHeaderComment = "SystemA Message")
+@TargetPropertyFile(classCommentTitle = "SystemA Message")
 final String systemA = "properties.systema";
 
-@TargetPropertyFile(classHeaderComment = "SystemB Message")
+@TargetPropertyFile(classCommentTitle = "SystemB Message")
 final String systemB = "properties.systemb";
 
 ```
@@ -851,16 +850,16 @@ Licence
 ```
 
 
-#### RootLocaleの指定（xml）
+### RootLocaleの指定（xml）
 
 デフォルトロケールではなく（実行環境のロケールではなく）、ルートロケール（ロケール指定なしの`PropertyFile`）を指定したい場合の設定です.
 
-##### Code
+#### Code
 ```
 https://bitbucket.org/vermeer_etc/resource-enum-user-rootlocalexml.git
 ```
 
-##### 定義用Xmlファイル による共通指定
+#### 定義用Xmlファイル による共通指定
 
 ```xml
 <propertyFileEnum>
@@ -877,17 +876,17 @@ https://bitbucket.org/vermeer_etc/resource-enum-user-rootlocalexml.git
 
 
 
-#### RootLocaleの指定（Java）
+### RootLocaleの指定（Java）
 
 デフォルトロケールではなく（実行環境のロケールではなく）、ルートロケール（ロケール指定なしの`PropertyFile`）を指定したい場合の設定です.
 
 
-##### Code
+#### Code
 ```
 https://bitbucket.org/vermeer_etc/resource-enum-user-rootlocalejava.git
 ```
 
-##### 定義用Javaクラスによる個別指定
+#### 定義用Javaクラスによる個別指定
 
 資産毎に制御をしたい場合は `@EnumResourceLocale` で指定してください.
 
@@ -900,19 +899,19 @@ final Locale locale() {
 }
 ```
 
-#### Control（`fallback`）設定
+### Control（`fallback`）設定
 
 
 `fallback`を指定すれば、指定したLocaleの`PropertyFile`が存在しない場合に、デフォルトロケールではなく、ルートロケール（ロケール指定なしの`PropertyFile`）を参照させることができます.
 
 
-##### Code
+#### Code
 
 ```
 https://bitbucket.org/vermeer_etc/resource-enum-user-control.git
 ```
 
-##### 定義用Javaクラスの説明
+#### 定義用Javaクラスの説明
 
 記述するクラスは完全修飾名で記述してください.
 
@@ -923,7 +922,7 @@ final Control control() {
 }
 ```
 
-##### 生成クラスの動作確認
+#### 生成クラスの動作確認
 
 存在しないロケールを指定した場合、デフォルトロケールではなく、ルートロケールが選択されていることが確認できます.
 
@@ -940,7 +939,7 @@ public void 存在しないロケールを指定した場合はルートロケ�
 ```
 
 
-#### Control（独自）設定
+### Control（独自）設定
 
 独自に実装した`Contorl`クラスも指定できます.
 
