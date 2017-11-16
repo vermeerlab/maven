@@ -50,8 +50,6 @@ Dynamic Compiler
 
 #### インターフェースの実装を文字列で指定
 
-DIもどきのことが実現できる？
-
 ```java
 @Test
 public void 文字列からクラスをコンパイル() throws NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -61,10 +59,6 @@ public void 文字列からクラスをコンパイル() throws NoSuchMethodExce
     Assert.assertThat(value, is("testclass"));
 }
 ```
-
-#### メソッドの実装を動的に実行
-
-
 
 
 ## Code
