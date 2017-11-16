@@ -15,17 +15,4 @@
         <module>../apt-propertyfile-enum</module>
         <module>../dynamic-compiler</module>
     </modules>
-
-    <properties>
-        <!-- Maven Repository on GitHub  start -->
-        <git.isMerge>false</git.isMerge>
-        <!-- Maven Repository on GitHub  end-->
-    </properties>
-
-    <parent>
-        <groupId>org.vermeerlab</groupId>
-        <artifactId>parentpom</artifactId>
-        <version>0.1.0</version>
-        <relativePath>../</relativePath>
-    </parent>
 </project>
