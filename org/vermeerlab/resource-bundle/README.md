@@ -172,14 +172,31 @@ ResourceBundleの有効期限(0またはキャッシュ格納時刻からの正�
 ```
 
 
-
-
 全ての設定は組み合わせて使用することが出来ます.
+
+
+### 複数リソースの参照
+
+``BaseName``をカンマ区切りで記述することで
+異なるResourceBundleを一括で読み込めます。
+
+```java
+        CustomControl control = CustomControl.builder().build();
+        ResourceBundle bundle 
+        = ResourceBundle.getBundle(
+            "mergebundle.patternA,  mergebundle.patternB,  mergebundle.patternC,  mergebundle.patternD"
+            ,control);
+```
+
+
 ## Code
 [BitBucket](https://bitbucket.org/vermeerlab/resource-bundle)
 
 
 ## Version
+
+* 0.2.0  
+複数リソースファイルの読み込み（``*.properties``のみ）
 
 * 0.1.0  
 初期リリース
