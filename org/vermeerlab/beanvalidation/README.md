@@ -1,14 +1,13 @@
-Extention Resource Bundle
+Custom BeanValidation
 ===
 
-拡張`Resource Bundle`です.
+BeanValidationを使いやすいように独自拡張するライブラリ.
 
-このパッケージを使用することで便利になることは以下です.
+BeanValidationにより検証をするにあたって機能拡張をするライブラリです。
 
-* UTF-8のResourceを扱えるようになる
-* デフォルトリソースではなく、デフォルトロケールの指定ができるようになる
-* 上述の指定をbuilderで記述できる
-
+* 検証とメッセージ変換を分けて行えるようにします
+* Form（画面要素）を検証した際に項目名ラベルを付与し、その値をメッセージに適用します
+* 複数のリソースを指定できます
 
 ## Usage
 
@@ -43,160 +42,48 @@ Extention Resource Bundle
 <dependencies>
     <dependency>
         <groupId>org.vermeerlab</groupId>
-        <artifactId>resource-bundle</artifactId>
+        <artifactId>beanvalidation</artifactId>
         <version>0.1.0</version> <!-- target version -->
     </dependency>
 </dependencies>
 ```
 
-### パラメーター実装
 
-#### デフォルト指定
+### 実装例
 
-文字コード ASCII、取得対象検索順：class・properties・xml、Localeはデフォルトロケールです.
-（デフォルトリソースではありません）
+実装例はテストコードを参考にしてください。
 
-デフォルトロケールが存在しない場合は、デフォルトリソース（ロケール記載の無いリソースファイル）を検索します.
+
+[TestCode](https://bitbucket.org/vermeerlab/beanvalidation/src/e065b792a38088e6a3ffd6f48aade5dfff2fe080/src/test/java/org/vermeerlab/beanvalidation/it/ValidationTest.java?at=master&fileviewer=file-view-default)
+
+#### 検証結果からメッセージ変換
 
 ```java
-CustomControl control = CustomControl.builder().build();
+
+Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+Set<ConstraintViolation<TargetView>> results = validator.validate(view, FormValidation.class);
+
+
+// メッセージ変換に使用するResourceBundleを指定します
+MessageInterpolatorFactory interpolatorFactory
+                            = MessageInterpolatorFactory.of("Messages", "FormMessages", "FormLabels");
+
+// 変換インスタンスを生成します（ロケールは未指定）
+MessageInterpolator interpolator = interpolatorFactory.create();
+
+for (ConstraintViolation<TargetView> result : results) {
+    // 検証結果からメッセージを変換します.
+    String convertedMessage = interpolator.toMessage(result);
+    System.out.println(convertedMessage);
+}
+
 ```
-
-#### 文字コードを指定する場合
-
-```java
- CustomControl control = CustomControl.builder().charCode(StandardCharsets.UTF_8.toString()).build();
-
- CustomControl control = CustomControl.builder().charCode("UTF-8").build();
-
- CustomControl control = CustomControl.builder().charCode("SJIS").build();
-````
-
-#### 参照するリソースの順番を変える場合
-
-デフォルト（class・properties・xml）から properties・xml・classに変更する.
-
-```java
- CustomControl control = CustomControl.builder()
-  .formats(CustomControl.FORMAT_DEFAULT)
-  .formats(CustomControl.FORMAT_XML)
-  .build();
-```
-
-#### 参照するリソースを固定する場合
-
-XMLのみの場合
-
-```java
- CustomControl control = CustomControl.builder()
-  .formats(CustomControl.FORMAT_XML)
-  .build();
-```
-
-#### 検索ロケール順を指定する場合
-
-必ず、デフォルトLocale.ROOTを入れておくと、リソース検索エラーになりにくくなることが期待されます.
-
-事例は検索を適用するロケールが日本語（JAPANESE）で、検索順をUS・JAPAN・デフォルトリソースの順とした記述（通常、こういうことはしないが実装例として記載）
-
-```java
- CustomControl control = CustomControl.builder()
- .targetCandidateLocalePair(
-
-  TargetCandidateLocalePair.builder()
-      .targetLocale(Locale.JAPANESE)
-      .candidateLocale(Locale.US)
-      .candidateLocale(Locale.JAPAN)
-      .candidateLocale(Locale.ROOT)
-      .build()
-  .build();
-```
-
-#### 検索を適用するロケールを複数指定した場合
-
-```java
- CustomControl control = CustomControl.builder()
- .charCode("UTF-8")
- .targetCandidateLocalePair(
-
-  TargetCandidateLocalePair.builder()
-      .targetLocale(Locale.US)
-      .candidateLocale(Locale.Locale.ENGLISH)
-      .candidateLocale(Locale.ROOT)
-      .build()
-
- .targetCandidateLocalePair(
-  TargetCandidateLocalePair.builder()
-      .targetLocale(Locale.JAPANESE)
-      .candidateLocale(Locale.JAPAN)
-      .candidateLocale(Locale.ROOT)
-      .build()
-  .build();
-```
-
-nullの場合は、ResourceBundleで指定したロケールと同じロケールに置き換えます.
-
-```java
- CustomControl control = CustomControl.builder()
- .targetCandidateLocalePair(
-  TargetCandidateLocalePair.builder()
-      .targetLocale(Locale.JAPANESE)
-      .candidateLocale(Locale.US)
-      .candidateLocale(null)
-      .candidateLocale(Locale.ROOT)
-      .build()
-  .build();
-```
-
-#### データキャッシュを設定する場合
-
-キャッシュする：CustomControl.TTL_NO_EXPIRATION_CONTROL（デフォルト）
-
-```java
- CustomControl control = CustomControl.builder().timeToLive(CustomControl.TTL_NO_EXPIRATION_CONTROL).build();
-```
-
-キャッシュしない・都度リソースを読み込む：
-```java
-CustomControl.TTL_DONT_CACHE
-```
-
-```java
- CustomControl control = CustomControl.builder().timeToLive(CustomControl.TTL_DONT_CACHE).build();
-```
-
-ResourceBundleの有効期限(0またはキャッシュ格納時刻からの正のミリ秒オフセット)を指定します.
-
-```java
- CustomControl control = CustomControl.builder().timeToLive(1000L).build();
-```
-
-
-全ての設定は組み合わせて使用することが出来ます.
-
-
-### 複数リソースの参照
-
-``BaseName``をカンマ区切りで記述することで
-異なるResourceBundleを一括で読み込めます。
-
-```java
-        CustomControl control = CustomControl.builder().build();
-        ResourceBundle bundle 
-        = ResourceBundle.getBundle(
-            "mergebundle.patternA,  mergebundle.patternB,  mergebundle.patternC,  mergebundle.patternD"
-            ,control);
-```
-
 
 ## Code
-[BitBucket](https://bitbucket.org/vermeerlab/resource-bundle)
-
+[BitBucket](https://bitbucket.org/vermeerlab/beanvalidation)
 
 ## Version
-
-* 0.2.0  
-複数リソースファイルの読み込み（``*.properties``のみ）
 
 * 0.1.0  
 初期リリース
