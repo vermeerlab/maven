@@ -85,6 +85,9 @@ for (ConstraintViolation<TargetView> result : results) {
 
 ## Version
 
+* 0.3.2
+プロパティをValueObjectからStringに変更  
+
 * 0.1.0  
 初期リリース
 
