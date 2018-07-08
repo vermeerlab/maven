@@ -85,7 +85,11 @@ for (ConstraintViolation<TargetView> result : results) {
 
 ## Version
 
-* 0.3.2
+* 0.4.0  
+validateメソッドのgroupsを事前に保持する Validator（GroupSequenceValidator）を追加  
+
+
+* 0.3.2  
 プロパティをValueObjectからStringに変更  
 
 * 0.1.0  
