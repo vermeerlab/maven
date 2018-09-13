@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.vermeerlab</groupId>
+    <artifactId>annotation-processor-command-propertyfile-enum</artifactId>
+    <version>0.1.1</version>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>org.vermeerlab</groupId>
+        <artifactId>parentpom</artifactId>
+        <version>0.1.0</version>
+        <relativePath>../</relativePath>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>annotation-processor-javapoet</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+
+        <!-- for annotation processor start-->
+        <dependency>
+            <groupId>com.google.testing.compile</groupId>
+            <artifactId>compile-testing</artifactId>
+        </dependency>
+        <!-- annotation processor end -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- for annotation processor start-->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <!-- Disable annotation processing for ourselves. -->
+                    <compilerArgument>-proc:none</compilerArgument>
+                    <showDeprecation>true</showDeprecation>
+                </configuration>
+            </plugin>
+            <!-- annotation processor end -->
+        </plugins>
+
+    </build>
+</project>
