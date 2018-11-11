@@ -85,6 +85,9 @@ for (ConstraintViolation<TargetView> result : results) {
 
 ## Version
 
+* 0.4.1  
+パッケージの見直し  
+
 * 0.4.0  
 validateメソッドのgroupsを事前に保持する Validator（GroupSequenceValidator）を追加  
 
